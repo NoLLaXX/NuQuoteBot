@@ -1,0 +1,50 @@
+﻿<div>
+    @if (ShowStatus)
+    {
+        <div></div>
+    }
+
+    <div>
+        <h1>айди @Id</h1>
+        <h2>text: @Text</h2>
+    </div>
+
+    <div>
+        @if (ShowUserControls)
+        {
+            <button>Delete</button>
+        }
+        @if (ShowModeratorControls)
+        {
+            <button>Approve</button>
+            <button>Deny</button>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public ulong Id { get; set; }
+    [Parameter, EditorRequired]
+    public string Text { get; set; }
+
+    [Parameter]
+    public bool ShowModeratorControls { get; set; } = false;
+    [Parameter]
+    public bool ShowUserControls { get; set; } = false;
+    [Parameter]
+    public bool ShowStatus { get; set; } = false;
+
+    private enum QuoteStatus
+    {
+        Pending,
+        Approved,
+        Denied,
+        Sent
+    }
+
+    private QuoteStatus QuoteStatus()
+    {
+        
+    }
+}

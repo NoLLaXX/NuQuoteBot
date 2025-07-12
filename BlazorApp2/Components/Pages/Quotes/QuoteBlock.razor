@@ -1,0 +1,12 @@
+﻿<div>
+    @if (Quotes != null)
+    @foreach (var quote in Quotes)
+    {
+        <QuoteCard Id="@quote.Id" Text="@quote.Text"></QuoteCard>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IEnumerable<QuoteDto>? Quotes { get; set; }
+}
