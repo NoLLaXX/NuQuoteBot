@@ -15,7 +15,18 @@ namespace Bot
         {
             var builder = Host.CreateApplicationBuilder(args);
 
-            builder.Configuration.AddJsonFile("libAppsettings.json");
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile("appsettings.Development.json");
+            }
+            else if (builder.Environment.IsProduction())
+            {
+                builder.Configuration
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile(Path.Combine(new string[] { Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) , "Bot.appsettings.Development.json" }));
+            }
 
             builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
 
