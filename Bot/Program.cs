@@ -25,7 +25,8 @@ namespace Bot
             {
                 builder.Configuration
                     .AddJsonFile("appsettings.json")
-                    .AddJsonFile(Path.Combine(new string[] { Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) , "Bot.appsettings.Development.json" }));
+                    .AddJsonFile(Path.Combine(new string[] {"Configs", "Bot.appsettings.Production.json" }))
+                    .AddEnvironmentVariables();
             }
 
             builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
