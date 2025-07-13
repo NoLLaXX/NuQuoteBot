@@ -25,7 +25,6 @@ namespace Bot
             {
                 builder.Configuration
                     .AddJsonFile("appsettings.json")
-                    .AddJsonFile(Path.Combine(new string[] {"Configs", "Bot.appsettings.Production.json" }))
                     .AddEnvironmentVariables();
             }
 
