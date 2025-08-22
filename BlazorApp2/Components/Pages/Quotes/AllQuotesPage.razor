@@ -1,0 +1,27 @@
+﻿@page "/Quotes/All"
+@using System.Text.Json
+@inject HttpClient Http
+@inject IQuoteService QuoteService
+
+
+<h3>AllQuotesPage</h3>
+<h1>-----------------</h1>
+<QuoteBlock Quotes="@_quotes"></QuoteBlock>
+
+
+@code {
+    private IEnumerable<QuoteDto>? _quotes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _quotes = await QuoteService.GetAllQuotesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERR data loading failure: {ex.Message}");
+        }
+    }
+}
+
