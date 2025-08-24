@@ -84,7 +84,7 @@ namespace Example.Services
                 await _interactions.RegisterCommandsToGuildAsync(guildId, true);
                 _logger.LogInformation("Registered commands to guild: " + guildId);
             }
-            if (_environment.IsProduction())
+            else if (_environment.IsProduction())
             {
                 await _interactions.RegisterCommandsGloballyAsync(true);
                 _logger.LogInformation("Registered commands globally");

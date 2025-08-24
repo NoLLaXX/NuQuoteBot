@@ -33,10 +33,6 @@ namespace Bot
                     .AddEnvironmentVariables();
             }
 
-            builder.Services.AddOptions<Program>()
-    .ValidateDataAnnotations()
-    .ValidateOnStart();
-
             builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
 
             builder.Services.AddApplicationServices(builder.Configuration.GetConnectionString("DefaultConnection"));
