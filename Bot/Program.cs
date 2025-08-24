@@ -15,18 +15,27 @@ namespace Bot
         {
             var builder = Host.CreateApplicationBuilder(args);
 
+            builder.Configuration.Sources.Clear();
+
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration
-                    .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings.Development.json");
+                    .AddJsonFile("appsettings.json", true)
+                    .AddJsonFile("appsettings.Development.json", true)
+                    .AddUserSecrets<Program>()
+                    .AddEnvironmentVariables();
             }
             else if (builder.Environment.IsProduction())
             {
                 builder.Configuration
                     .AddJsonFile("appsettings.json")
+                    .AddJsonFile("appsettings.Production.json")
                     .AddEnvironmentVariables();
             }
+
+            builder.Services.AddOptions<Program>()
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
 
             builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
 

@@ -21,13 +21,15 @@ namespace Example.Services
         private readonly IServiceProvider _services;
         private readonly Config _config;
         private readonly ILogger<InteractionService> _logger;
+        private readonly IHostEnvironment _environment;
 
         public InteractionHandlingService(
             DiscordSocketClient discord,
             InteractionService interactions,
             IServiceProvider services,
             IOptions<Config> config,
-            ILogger<InteractionService> logger)
+            ILogger<InteractionService> logger,
+            IHostEnvironment environment)
         {
             _discord = discord;
             _interactions = interactions;
@@ -36,6 +38,7 @@ namespace Example.Services
             _logger = logger;
 
             _interactions.Log += msg => LogHelper.OnLogAsync(_logger, msg);
+            _environment = environment;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -74,15 +77,18 @@ namespace Example.Services
         {
             await _interactions.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var guildId = _config.TestServerId;
+            if (_environment.IsDevelopment())
+            {
+                var guildId = _config.TestServerId;
 
-            //await _interactions.RegisterCommandsToGuildAsync(guildId, true);
-            //_logger.LogInformation("Registered commands to guild: " + guildId);
-
-            await _interactions.RegisterCommandsGloballyAsync(true);
-            _logger.LogInformation("Registered commands globally");
-
-
+                await _interactions.RegisterCommandsToGuildAsync(guildId, true);
+                _logger.LogInformation("Registered commands to guild: " + guildId);
+            }
+            if (_environment.IsProduction())
+            {
+                await _interactions.RegisterCommandsGloballyAsync(true);
+                _logger.LogInformation("Registered commands globally");
+            }
         }
 
     }
