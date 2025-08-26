@@ -368,3 +368,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ArmDockerImg.bat
+/bot-docker-compose-template.yaml
+/bot.dockerfile
+/site.dockerfile
