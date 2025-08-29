@@ -7,6 +7,7 @@ using Discord.WebSocket;
 using Example.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 namespace Bot
 {
