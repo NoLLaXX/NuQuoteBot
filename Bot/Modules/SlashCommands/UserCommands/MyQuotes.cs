@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bot.Modules.SlashComands
+namespace Bot.Modules.SlashCommands.UserCommands
 {
-    public partial class TestSlashCommands : InteractionModuleBase<SocketInteractionContext>
+    public partial class UserCommands
     {
         [SlashCommand("myquotes", "Показать ваши цитаты")]
         public async Task MyQuotes(int page = 0, string status = "All")

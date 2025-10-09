@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="publish\**" />
+    <Content Remove="publish\**" />
+    <EmbeddedResource Remove="publish\**" />
+    <None Remove="publish\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.17.4" />
     <PackageReference Include="Discord.Net.Interactions" Version="3.17.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />

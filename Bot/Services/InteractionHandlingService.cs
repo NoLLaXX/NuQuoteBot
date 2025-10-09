@@ -82,12 +82,12 @@ namespace Example.Services
                 var guildId = _config.TestServerId;
 
                 await _interactions.RegisterCommandsToGuildAsync(guildId, true);
-                _logger.LogInformation("Registered commands to guild: " + guildId);
+                _logger.LogCritical("Registered commands to guild: " + guildId);
             }
             else if (_environment.IsProduction())
             {
                 await _interactions.RegisterCommandsGloballyAsync(true);
-                _logger.LogInformation("Registered commands globally");
+                _logger.LogCritical("Registered commands globally");
             }
         }
 

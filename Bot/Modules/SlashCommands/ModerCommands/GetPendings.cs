@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bot.Modules.SlashComands
+namespace Bot.Modules.SlashCommands.ModerCommands
 {
-    public partial class TestSlashCommands : InteractionModuleBase<SocketInteractionContext>
+    public partial class ModerCommands
     {
         [SlashCommand("getpendings", "Получить предложку")]
         public async Task GetPendings(string page = "0")

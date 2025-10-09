@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bot.Modules.SlashComands
+namespace Bot.Modules.SlashCommands
 {
     public partial class TestSlashCommands : InteractionModuleBase<SocketInteractionContext>
     {

@@ -1,5 +1,6 @@
 using Application;
 using Bot.Services;
+using Bot.Services.CommandServices;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -36,6 +37,7 @@ namespace Bot
             builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
 
             builder.Services.AddApplicationServices(builder.Configuration.GetConnectionString("DefaultConnection"));
+            builder.Services.AddCommandServices();
 
             // Регистрация DiscordSocketClient и InteractionService
             builder.Services.AddSingleton<DiscordSocketClient>(sp =>

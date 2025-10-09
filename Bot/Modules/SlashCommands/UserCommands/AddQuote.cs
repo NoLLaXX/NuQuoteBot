@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bot.Modules.SlashComands
+namespace Bot.Modules.SlashCommands.UserCommands
 {
-    public partial class TestSlashCommands : InteractionModuleBase<SocketInteractionContext>
+    public partial class UserCommands
     {
 
         [SlashCommand("addquote", "Добавить цитату")]
@@ -35,9 +35,9 @@ namespace Bot.Modules.SlashComands
                 await _quoteService.AddQuoteAsync(Context.User.Id, Context.Guild.Id, fullText, isAnon);
                 await RespondAsync("Цитата добавлена");
             }
-            catch
+            catch (Exception ex)
             {
-                await RespondAsync("Неправильно введён текст");
+                await RespondAsync(ex.Message);
             }
         }
     }

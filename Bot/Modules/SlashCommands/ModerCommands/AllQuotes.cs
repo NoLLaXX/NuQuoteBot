@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bot.Modules.SlashComands
+namespace Bot.Modules.SlashCommands.ModerCommands
 {
-    public partial class TestSlashCommands : InteractionModuleBase<SocketInteractionContext>
+    public partial class ModerCommands
     {
         [SlashCommand("allquotes", "Показать все цитаты сервера (только для модераторов)")]
         public async Task AllQuotes(int page = 0, string status = "All")
