@@ -372,3 +372,5 @@ FodyWeavers.xsd
 /bot-docker-compose-template.yaml
 /bot.dockerfile
 /site.dockerfile
+/Bot/appsettings.Development.json
+/DataBaseInfrastructure/DB_Storage/appDB.db
