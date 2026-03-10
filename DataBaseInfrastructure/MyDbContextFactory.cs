@@ -9,7 +9,7 @@ namespace DataBaseInfrastructure
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyDbContext>();
 
-            optionsBuilder.UseSqlite(@"Data Source=D:\MyDir\repos\.нужное\NuQuoteBot\NuQuoteBot\DataBaseInfrastructure\DB_Storage\appDB.db");
+            optionsBuilder.UseSqlite(@"Data Source=/home/nolax/Desktop/mydir/sqlite/NQB.db");
 
             return new MyDbContext(optionsBuilder.Options);
         }
