@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using SharedConfiguration;
 
 namespace Bot.Services
 {
@@ -44,7 +45,7 @@ namespace Bot.Services
 
                     try
                     {
-                        // Получаем все цитаты со статусом Approved и MsgId == null
+                        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Approved пїЅ MsgId == null
                         var quotes = await quoteService.GetApprovedQuotesWithNoMsgIdAsync();
                         foreach (var quote in quotes)
                         {
@@ -57,7 +58,7 @@ namespace Bot.Services
                                 var channel = guild.GetTextChannel(channelId.Value);
                                 if (channel == null) continue;
 
-                                // Оформляем цитату в рамку
+                                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 
                                 string? nick = null;
                                 if (!quote.IsAnon) nick = discordUtilityService.GetGuildUserNick(quote.OurGuildId, quote.OurMemberId);
@@ -68,17 +69,17 @@ namespace Bot.Services
                             }
                             catch (Exception ex)
                             {
-                                _logger.LogError(ex, $"Ошибка при отправке цитаты {quote.Id}");
+                                _logger.LogError(ex, $"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {quote.Id}");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Ошибка в QuoteSenderService");
+                        _logger.LogError(ex, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ QuoteSenderService");
                     }
                 }
 
-                Console.WriteLine($"QuoteSenderService: Одобреные цитаты отправлены.");
+                Console.WriteLine($"QuoteSenderService: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 
                 await Task.Delay(TimeSpan.FromSeconds(_config.SecsToCheckDB), stoppingToken);
             }

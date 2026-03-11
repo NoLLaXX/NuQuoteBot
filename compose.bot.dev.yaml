@@ -1,0 +1,24 @@
+services:                           
+  NuQuoteBot:
+    image: bot
+    build:
+      context: .
+      dockerfile: Bot/Dockerfile
+      args:
+        - configuration=Debug
+    container_name: NuQuoteBot
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Config__Token=${Token}
+      - Config__OwnerId=${OwnerId}
+      - Config__TestServerId=${TestServerId}
+      - Config__SecsToCheckDB=${SecsToCheckDB}
+      - ConnectionStrings__DefaultConnection=Data Source=/data/nqb.db
+    volumes:
+      - sqlite_data:/data
+
+volumes:
+  sqlite_data:
+
+
+  

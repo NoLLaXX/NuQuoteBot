@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using SharedConfiguration;
 
 namespace DataBaseInfrastructure
 {
@@ -9,7 +11,9 @@ namespace DataBaseInfrastructure
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyDbContext>();
 
-            optionsBuilder.UseSqlite(@"Data Source=/home/nolax/Desktop/mydir/sqlite/NQB.db");
+            var conf = ConfigurationFactory.BuildConfiguration();
+            
+            optionsBuilder.UseSqlite(conf.GetConnectionString("DefaultConnection"));
 
             return new MyDbContext(optionsBuilder.Options);
         }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SharedConfiguration;
 using System;
 using System.Reflection;
 using System.Threading;
@@ -75,6 +76,15 @@ namespace Example.Services
 
         private async Task OnReadyAsync()
         {
+            if (false)
+            {
+                var commands = await _discord.GetGlobalApplicationCommandsAsync();
+                foreach (var c in commands)
+                {
+                    await c.DeleteAsync();
+                }
+            }
+
             await _interactions.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
             if (_environment.IsDevelopment())

@@ -21,6 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../SharedConfiguration/SharedConfiguration.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules/SlashCommands/OwnerCommands/" />
   </ItemGroup>
 </Project>

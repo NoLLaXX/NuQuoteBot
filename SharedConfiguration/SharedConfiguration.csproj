@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SharedConfiguration/SharedConfiguration.csproj" />
-    <ProjectReference Include="..\DataBaseInfrastructure\DataBaseInfrastructure.csproj" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

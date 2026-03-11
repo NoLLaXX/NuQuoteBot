@@ -8,48 +8,35 @@ using Example.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using SharedConfiguration;
+using DataBaseInfrastructure;
 
 namespace Bot
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = Host.CreateApplicationBuilder(args);
 
             builder.Configuration.Sources.Clear();
 
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Configuration
-                    .AddJsonFile("appsettings.json", true)
-                    .AddJsonFile("appsettings.Development.json", true)
-                    .AddUserSecrets<Program>()
-                    .AddEnvironmentVariables();
-            }
-            else if (builder.Environment.IsProduction())
-            {
-                builder.Configuration
-                    .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings.Production.json")
-                    .AddEnvironmentVariables();
-            }
+            var config = ConfigurationFactory.BuildConfiguration();
 
-            builder.Services.Configure<Config>(builder.Configuration.GetSection("MapSettings"));
+            builder.Services.AddAppConfiguration(config);
+            builder.Services.AddApplicationServices(config.GetConnectionString("DefaultConnection"));
 
-            builder.Services.AddApplicationServices(builder.Configuration.GetConnectionString("DefaultConnection"));
             builder.Services.AddCommandServices();
 
-            // Регистрация DiscordSocketClient и InteractionService
             builder.Services.AddSingleton<DiscordSocketClient>(sp =>
             {
                 var config = new DiscordSocketConfig
                 {
                     GatewayIntents = GatewayIntents.All,
-                    
                 };
                 return new DiscordSocketClient(config);
             });
+
             builder.Services.AddSingleton<InteractionService>(sp =>
             {
                 var client = sp.GetRequiredService<DiscordSocketClient>();
@@ -59,13 +46,16 @@ namespace Bot
             builder.Services.AddHostedService<InteractionHandlingService>();
             builder.Services.AddHostedService<DiscordStartupService>();
 
-            builder.Services.AddHostedService<QuoteCleanupService>();
-            builder.Services.AddHostedService<QuoteSenderService>();
+            //builder.Services.AddHostedService<QuoteCleanupService>();
+            //builder.Services.AddHostedService<QuoteSenderService>();
 
             builder.Services.AddScoped<DiscordUtilityService>();
 
             var host = builder.Build();
-            host.Run();
+
+            await host.ApplyMigrations();
+
+            await host.RunAsync();
         }
     }
 }

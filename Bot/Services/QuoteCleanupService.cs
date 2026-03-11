@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SharedConfiguration;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,17 +59,17 @@ namespace Bot.Services
                             }
                             catch (Exception ex)
                             {
-                                _logger.LogError(ex, $"Ошибка при удалении сообщения цитаты {quote.Id}");
+                                _logger.LogError(ex, $"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {quote.Id}");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Ошибка в QuoteCleanupService");
+                        _logger.LogError(ex, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ QuoteCleanupService");
                     }
                 }
 
-                Console.WriteLine($"QuoteCleanupService: Проверка цитат на удаление завершена. Цитаты удалены.");
+                Console.WriteLine($"QuoteCleanupService: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
                 await Task.Delay(TimeSpan.FromSeconds(_config.SecsToCheckDB), stoppingToken);
             }
         }

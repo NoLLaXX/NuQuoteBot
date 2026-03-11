@@ -1,2 +1,8 @@
 # NuQuoteBot
 
+## ENV
+
+### Required
+
+### Optional
+

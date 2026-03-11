@@ -14,7 +14,7 @@ namespace Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, string connectionString)
         {
             services.AddDataServices(connectionString);
-
+            
             services.AddMemoryCache();
             services.AddScoped<DataIntegrityService>();
 
