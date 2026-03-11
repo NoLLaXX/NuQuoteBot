@@ -1,13 +1,6 @@
 ﻿using Application.DTO;
-using Discord.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Services;
 using Discord;
-using System;
+using Discord.Interactions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +12,7 @@ namespace Bot.Modules.SlashCommands.ModerCommands
         [SlashCommand("allquotes", "Показать все цитаты сервера (только для модераторов)")]
         public async Task AllQuotes(int page = 0, string status = "All")
         {
-            bool isModer = await _discordUtilityService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
+            bool isModer = await _moderService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
             if (!isModer)
             {
                 await RespondAsync("Только модераторы могут просматривать все цитаты сервера.", ephemeral: true);
@@ -28,10 +21,10 @@ namespace Bot.Modules.SlashCommands.ModerCommands
 
             List<QuoteDto> quotes = status switch
             {
-                "Pending" => await _quoteService.GetPendingQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
-                "Approved" => await _quoteService.GetApprovedQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
-                "Denied" => await _quoteService.GetDeniedQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
-                _ => await _quoteService.GetQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5)
+                "Pending" => await _moderService.GetPendingQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
+                "Approved" => await _moderService.GetApprovedQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
+                "Denied" => await _moderService.GetDeniedQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5),
+                _ => await _moderService.GetQuotesByGuildAsync((ulong)Context.Guild.Id, skip: page * 5, take: 5)
             };
 
             var embed = new EmbedBuilder()

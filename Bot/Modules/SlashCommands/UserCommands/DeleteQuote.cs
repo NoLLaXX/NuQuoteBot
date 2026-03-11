@@ -1,12 +1,6 @@
-﻿using Application.Services;
-using Application.Extensions;
+﻿using Application.Extensions;
 using Discord;
 using Discord.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bot.Modules.SlashCommands.UserCommands
 {
@@ -16,7 +10,7 @@ namespace Bot.Modules.SlashCommands.UserCommands
         public async Task DeleteQuote(ulong quoteId)
         {
             // Получаем цитату
-            var quote = await _quoteService.FindAsync(quoteId);
+            var quote = await _userService.FindAsync(quoteId);
             if (quote == null)
             {
                 await RespondAsync($"Цитата с ID {quoteId} не найдена", ephemeral: true);
@@ -26,7 +20,7 @@ namespace Bot.Modules.SlashCommands.UserCommands
             // Если цитата принадлежит пользователю
             if (quote.OurMemberId == Context.User.Id)
             {
-                var result = await _quoteService.MarkQuoteOnDeletionAsync(quoteId);
+                var result = await _userService.MarkQuoteOnDeletionAsync(quoteId);
                 if (result)
                     await RespondAsync($"Цитата {quoteId} удалена", ephemeral: true);
                 else
@@ -35,10 +29,10 @@ namespace Bot.Modules.SlashCommands.UserCommands
             }
 
             // Проверяем, является ли пользователь модератором
-            bool isModer = await _discordUtilityService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
+            bool isModer = await _userService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
             if (isModer)
             {
-                var result = await _quoteService.MarkQuoteOnDeletionAsync(quoteId);
+                var result = await _userService.MarkQuoteOnDeletionAsync(quoteId);
                 if (result)
                     await RespondAsync($"Цитата {quoteId} удалена модератором", ephemeral: true);
                 else

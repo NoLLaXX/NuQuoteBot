@@ -12,6 +12,9 @@ namespace Bot.Services.CommandServices
         public static IServiceCollection AddCommandServices(this IServiceCollection services)
         {
             services.AddScoped<AdminService>();
+            services.AddScoped<ModerService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<OwnerService>();
             return services;
         }
     }

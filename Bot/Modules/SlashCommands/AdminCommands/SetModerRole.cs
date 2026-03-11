@@ -16,6 +16,7 @@ namespace Bot.Modules.SlashCommands.AdminCommands
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task SetModerRole(IRole role)
         {
+            await _adminService.SetModerRole(role.Id, Context.Guild.Id);
             await RespondAsync($"Роль для модератора установлена: {role.Mention}", ephemeral: true);
         }
     }

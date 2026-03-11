@@ -1,11 +1,4 @@
-﻿using Application.Services;
-using Discord;
-using Discord.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Discord.Interactions;
 
 namespace Bot.Modules.SlashCommands.UserCommands
 {
@@ -32,7 +25,7 @@ namespace Bot.Modules.SlashCommands.UserCommands
                     .Where(s => !string.IsNullOrWhiteSpace(s));
                 var fullText = string.Join('\n', lines);
 
-                await _quoteService.AddQuoteAsync(Context.User.Id, Context.Guild.Id, fullText, isAnon);
+                await _userService.AddQuoteAsync(Context.User.Id, Context.Guild.Id, fullText, isAnon);
                 await RespondAsync("Цитата добавлена");
             }
             catch (Exception ex)

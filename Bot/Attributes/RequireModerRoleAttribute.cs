@@ -1,34 +1,35 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Bot.Services;
 using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
+using Discord.Interactions;
 
 namespace Bot.Attributes
 {
     public class RequireModerRoleAttribute : PreconditionAttribute
     {
-        public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider RootServiceProvider)
+        public override async Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, ICommandInfo command, IServiceProvider rootServiceProvider)
         {
-
-            if (context.User is IGuildUser gUser)
+            if (context.Guild is null)
             {
-                using (var serviceScope = RootServiceProvider.CreateScope())
-                {
-                    var LocalServiceProvider = serviceScope.ServiceProvider;
-
-                    var discordUtility = LocalServiceProvider.GetRequiredService<DiscordUtilityService>();
-
-                    var isModer = await discordUtility.IsUserModeratorAsync(gUser.Id, context.Guild.Id);
-
-                    if (isModer) return PreconditionResult.FromSuccess();
-                    else return PreconditionResult.FromError("Доступно только на модераторам");
-                }
+                return PreconditionResult.FromError("Доступно только на сервере");
             }
 
-            return PreconditionResult.FromError("Доступно только на сервере");
+            if (context.User is not IGuildUser gUser)
+            {
+                return PreconditionResult.FromError("Доступно только на сервере");
+            }
+
+            using var serviceScope = rootServiceProvider.CreateScope();
+            var localServiceProvider = serviceScope.ServiceProvider;
+
+            var discordUtility = localServiceProvider.GetRequiredService<DiscordUtilityService>();
+
+            var isModer = await discordUtility.IsUserModeratorAsync(context.Guild.Id, gUser.Id);
+
+            return isModer
+                ? PreconditionResult.FromSuccess()
+                : PreconditionResult.FromError("Доступно только модераторам");
         }
     }
 }

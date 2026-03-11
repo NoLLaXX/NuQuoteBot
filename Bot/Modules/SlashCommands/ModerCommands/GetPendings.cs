@@ -1,11 +1,5 @@
-﻿using Application.Services;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bot.Modules.SlashCommands.ModerCommands
 {
@@ -16,14 +10,14 @@ namespace Bot.Modules.SlashCommands.ModerCommands
         {
             if (!int.TryParse(page, out int pageNum) || pageNum < 0) pageNum = 0;
 
-            bool isModer = await _discordUtilityService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
+            bool isModer = await _moderService.IsUserModeratorAsync(Context.Guild.Id, Context.User.Id);
             if (!isModer)
             {
                 await RespondAsync("Только модераторы могут просматривать предложения.", ephemeral: true);
                 return;
             }
 
-            var quotes = await _quoteService.GetPendingQuotesByGuildAsync((ulong)Context.Guild.Id, skip: pageNum, take: 1);
+            var quotes = await _moderService.GetPendingQuotesByGuildAsync((ulong)Context.Guild.Id, skip: pageNum, take: 1);
             var quote = quotes.FirstOrDefault();
 
             if (quote == null)
@@ -67,7 +61,7 @@ namespace Bot.Modules.SlashCommands.ModerCommands
             {
                 try
                 {
-                    await _quoteService.ApproveQuoteAsync(id);
+                    await _moderService.ApproveQuoteAsync(id);
                     await RespondAsync("Цитата одобрена", ephemeral: true);
                 }
                 catch (Exception ex)
@@ -84,7 +78,7 @@ namespace Bot.Modules.SlashCommands.ModerCommands
             {
                 try
                 {
-                    await _quoteService.DenyQuoteAsync(id);
+                    await _moderService.DenyQuoteAsync(id);
                     await RespondAsync("Цитата отклонена", ephemeral: true);
                 }
                 catch (Exception ex)

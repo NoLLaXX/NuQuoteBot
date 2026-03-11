@@ -76,29 +76,21 @@ namespace Example.Services
 
         private async Task OnReadyAsync()
         {
-            if (false)
-            {
-                var commands = await _discord.GetGlobalApplicationCommandsAsync();
-                foreach (var c in commands)
-                {
-                    await c.DeleteAsync();
-                }
-            }
-
             await _interactions.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            if (_environment.IsDevelopment())
+            var guildId = _config.TestServerId;
+            
+            if (_environment.IsDevelopment() && guildId != 0)
             {
-                var guildId = _config.TestServerId;
-
                 await _interactions.RegisterCommandsToGuildAsync(guildId, true);
                 _logger.LogCritical("Registered commands to guild: " + guildId);
             }
-            else if (_environment.IsProduction())
+            else
             {
                 await _interactions.RegisterCommandsGloballyAsync(true);
                 _logger.LogCritical("Registered commands globally");
             }
+
         }
 
     }

@@ -1,19 +1,17 @@
-﻿using Application.Services;
-using Bot.Services;
+﻿using Bot.Attributes;
+using Bot.Services.CommandServices;
 using Discord.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bot.Modules.SlashCommands.ModerCommands
 {
+    [RequireModerRole]
     public partial class ModerCommands : InteractionModuleBase<SocketInteractionContext>
     {
-        private readonly OurGuildService _guildService;
-        private readonly QuoteService _quoteService;
-        private readonly OurMemberService _memberService;
-        private readonly DiscordUtilityService _discordUtilityService;
+        private readonly ModerService _moderService;
+
+        public ModerCommands(ModerService moderService)
+        {
+            _moderService = moderService;
+        }
     }
 }

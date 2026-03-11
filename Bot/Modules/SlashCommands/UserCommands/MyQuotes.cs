@@ -1,11 +1,8 @@
 ﻿using Application.DTO;
-using Application.Services;
 using Discord;
 using Discord.Interactions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bot.Modules.SlashCommands.UserCommands
@@ -17,10 +14,10 @@ namespace Bot.Modules.SlashCommands.UserCommands
         {
             List<QuoteDto> quotes = status switch
             {
-                "Pending" => await _quoteService.GetPendingQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
-                "Approved" => await _quoteService.GetApprovedQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
-                "Denied" => await _quoteService.GetDeniedQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
-                _ => await _quoteService.GetQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5)
+                "Pending" => await _userService.GetPendingQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
+                "Approved" => await _userService.GetApprovedQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
+                "Denied" => await _userService.GetDeniedQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5),
+                _ => await _userService.GetQuotesByUserAsync((ulong)Context.Guild.Id, (ulong)Context.User.Id, skip: page * 5, take: 5)
             };
 
             var embed = new EmbedBuilder()
