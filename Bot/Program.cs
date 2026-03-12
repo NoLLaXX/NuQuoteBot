@@ -37,7 +37,7 @@ namespace Bot
 
             builder.Services.AddApplicationServices(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-            // Регистрация DiscordSocketClient и InteractionService
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ DiscordSocketClient пїЅ InteractionService
             builder.Services.AddSingleton<DiscordSocketClient>(sp =>
             {
                 var config = new DiscordSocketConfig
@@ -64,5 +64,8 @@ namespace Bot
             var host = builder.Build();
             host.Run();
         }
+
+
+        
     }
 }
