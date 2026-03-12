@@ -28,6 +28,10 @@ namespace Bot
 
             builder.Services.AddCommandServices();
 
+<<<<<<< HEAD
+=======
+            // ����������� DiscordSocketClient � InteractionService
+>>>>>>> main
             builder.Services.AddSingleton<DiscordSocketClient>(sp =>
             {
                 var config = new DiscordSocketConfig
@@ -57,5 +61,8 @@ namespace Bot
 
             await host.RunAsync();
         }
+
+
+        
     }
 }
