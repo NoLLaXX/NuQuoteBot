@@ -1,0 +1,44 @@
+name: test
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore NuQuoteBot.sln
+
+      - name: Build solution
+        run: dotnet build NuQuoteBot.sln --configuration Release --no-restore
+
+      - name: Check for test projects
+        id: test_projects
+        shell: bash
+        run: |
+          if find . \( -name "*.Tests.csproj" -o -name "*Tests.csproj" -o -name "*.Test.csproj" -o -name "*Test.csproj" \) | grep -q .; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        if: steps.test_projects.outputs.found == 'true'
+        run: dotnet test NuQuoteBot.sln --configuration Release --no-build
+
+      - name: Skip tests
+        if: steps.test_projects.outputs.found != 'true'
+        run: echo "No test projects found. Skipping dotnet test."
