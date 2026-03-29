@@ -1,8 +1,0 @@
-# NuQuoteBot
-
-## ENV
-
-### Required
-
-### Optional
-

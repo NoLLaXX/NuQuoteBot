@@ -43,3 +43,29 @@ jobs:
       - name: Skip tests
         if: steps.test_projects.outputs.found != 'true'
         run: echo "No test projects found. Skipping dotnet test."
+
+      - name: Login to Gitea Registry
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          REGISTRY_HOST="${GITHUB_SERVER_URL#http://}"
+          REGISTRY_HOST="${REGISTRY_HOST#https://}"
+          echo "$GITHUB_TOKEN" | docker login "$REGISTRY_HOST" -u "$GITHUB_ACTOR" --password-stdin
+
+      - name: Build Docker image
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          REGISTRY_HOST="${GITHUB_SERVER_URL#http://}"
+          REGISTRY_HOST="${REGISTRY_HOST#https://}"
+          IMAGE="$REGISTRY_HOST/$GITHUB_REPOSITORY:latest"
+          docker build -f Bot/Dockerfile -t "$IMAGE" .
+
+      - name: Push Docker image
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          REGISTRY_HOST="${GITHUB_SERVER_URL#http://}"
+          REGISTRY_HOST="${REGISTRY_HOST#https://}"
+          IMAGE="$REGISTRY_HOST/$GITHUB_REPOSITORY:latest"
+          docker push "$IMAGE"
