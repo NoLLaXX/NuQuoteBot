@@ -28,10 +28,7 @@ namespace Bot
 
             builder.Services.AddCommandServices();
 
-<<<<<<< HEAD
-=======
-            // ����������� DiscordSocketClient � InteractionService
->>>>>>> main
+            // Регистрация DiscordSocketClient и InteractionService
             builder.Services.AddSingleton<DiscordSocketClient>(sp =>
             {
                 var config = new DiscordSocketConfig
